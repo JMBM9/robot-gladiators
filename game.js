@@ -34,7 +34,10 @@ if (promptFight === "" || promptFight === null) {
 var fight = function(enemy) {
   while (playerInfo.health > 0 && enemy.health > 0) {
     // ask player if they'd like to fight or run
-     fightOrSkip();
+      if (fightOrSkip()) {
+        //if true , leave fight by breaking loop
+        break;
+      }
      var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
     
     var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
