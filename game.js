@@ -32,32 +32,23 @@ if (promptFight === "" || promptFight === null) {
 
 // fight function (now with parameter for enemy's object holding name, health, and attack values)
 var fight = function(enemy) {
+  //keep track of who goes first
+  var isPLayerTurn= true;
+  //randomly change turn order
+  if (Math.random() > 0.5){
+    isPLayerTurn = false;
+  }
   while (playerInfo.health > 0 && enemy.health > 0) {
     // ask player if they'd like to fight or run
-      if (fightOrSkip()) {
+     if (isPLayerTurn) {
+    
+    if (fightOrSkip()) {
         //if true , leave fight by breaking loop
         break;
       }
-     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+
+  
     
-    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
-
-    // if player picks "skip" confirm and then stop the loop
-    promptFight= promptFight.toLowerCase();
-    if (promptFight === "skip" || promptFight === "SKIP") {
-      // confirm player wants to skip
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-      // if yes (true), leave fight
-      if (confirmSkip) {
-        window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
-        // subtract money from playerInfo.money for skipping
-        playerInfo.money = Math.max(0, playerInfo.money - 10);
-        console.log("playerInfo.money", playerInfo.money)
-        
-        return true;
-      }
-    }
 
     // generate random damage value based on player's attack power
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
@@ -80,6 +71,7 @@ var fight = function(enemy) {
       window.alert(enemy.name + ' still has ' + enemy.health + ' health left.');
     }
 
+  } else {
     // remove players's health by subtracting the amount set in the enemy.attack variable
     var damage = randomNumber(enemy.attack - 3, enemy.attack);
 
@@ -97,7 +89,11 @@ var fight = function(enemy) {
     } else {
       window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
     }
-  } // end of while loop
+  }
+  //switch turn order for next round
+  isPLayerTurn = !isPLayerTurn;
+}
+  // end of while loop
 }; // end of fight function
 
 // function to start a new game
@@ -172,7 +168,7 @@ var shop = function() {
   );
 shopOptionPrompt = parseInt(shopOptionPrompt);
   // use switch case to carry out action
-  debugger;
+  
   switch (shopOptionPrompt) {
     
     case 1:
